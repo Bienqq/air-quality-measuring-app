@@ -24,9 +24,11 @@
   },
   "homepage": "https://github.com/Bienqq/air-quality-measuring-app#readme",
   "dependencies": {
+    "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
+    "vue-router": "^3.0.6",
     "vuetify": "^1.5.12"
   },
   "devDependencies": {
