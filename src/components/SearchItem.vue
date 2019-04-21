@@ -1,18 +1,22 @@
 <template>
-		<v-flex xs1 class="animated fadeIn">
-			<h5>{{ city }}</h5>
-			<h6>{{ measurement }}</h6>
-		</v-flex>
+	<v-flex xs5 md3 class="pa-3">
+
+	</v-flex>
 </template>
 
 <script>
-export default {
-  name: 'SearchItem',
-  props: {
-    city: String,
-    measurement: Object
-  }
-}
+	export default {
+		name: 'SearchItem',
+		props: {
+			place: Object,
+			measurement: Object
+    },
+    data() {
+      return {
+        show: false,
+      }
+    },
+	}
 </script>
 
 <style lang="scss" scoped>

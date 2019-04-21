@@ -1,6 +1,6 @@
 <template>
   <v-layout align-center justify-center row fill-height align-baseline wrap>
-        <search-item class="animated fadeIn zoomIn faster" v-for="(item, index) in content" :city="item.city" :measurement="item.measurement" :key="index"/>
+        <search-item class="animated fadeIn faster" v-for="(item, index) in content" :place="item.place"  :measurement="item.measurement" :key="index"/>
   </v-layout>
 </template>
 

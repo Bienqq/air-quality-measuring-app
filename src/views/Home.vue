@@ -1,8 +1,10 @@
 <template>
-	<v-container fluid>
+	<v-container fluid >
+		
 		<v-layout align-space-around column justify-space-around align-self-baseline fill-height>
-
-      <v-flex xs3 :class="[!content && loading ? 'slideInUp' : '', 'animated', 'fast']">
+						
+      <v-flex xs3 :class="[!content && loading ? 'slideInUp' : '', 'animated', 'fast']" >
+				<h1 class="display-1 mb-5 text-xs-center header-color">POLLUTION VIEWER</h1>
 				<search @loading="loading = $event.loading" @error="showErrorSnackbar = true" @contentLoaded="content = $event.content" />
 			</v-flex>
 
@@ -40,10 +42,12 @@ export default {
       showErrorSnackbar: false,
       content: null
     }
-  }
-
+	},
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+.header-color{
+	color: rgba(0, 0, 0, .54)
+}
 </style>

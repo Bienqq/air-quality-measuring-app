@@ -1,4 +1,4 @@
-# air-quality-measuring-app
+# Pollution Viewer
 
 ## Project setup
 ```

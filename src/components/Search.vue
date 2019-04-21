@@ -1,13 +1,13 @@
 <template>
-
 	<v-form v-model="valid" ref="form" lazy-validation>
 		<v-layout align-center justify-center row fill-height align-baseline wrap>
+
 			<v-flex xs12 sm6 md4>
-				<v-autocomplete class="mr-4" label="Country name" v-model="selectedCountry" clearable prepend-icon="gps_fixed" hint="Eg. Poland, Germany, Spain or France" hide-selected persistent-hint :items="countries.map(el => el.name)" :rules="countryRules"></v-autocomplete>
+				<v-autocomplete class="mr-4" label="Country name" v-model="selectedCountry" clearable prepend-icon="gps_fixed" hint="Eg. Poland, Germany, Spain or France" hide-selected persistent-hint :items="countries.map(el => el.name)" :rules="countryRules" :menu-props="{'transition':'slide-y-transition'}" />
 			</v-flex>
 
 			<v-flex xs11 sm3 md2>
-				<v-autocomplete label="Parameter name" v-model="selectedParameter" clearable prepend-icon="warning" hint="Eg. PM25, PM10, SO2, NO2, O3, CO, BC" hide-selected persistent-hint :items="parameters" :rules="parameterRules"></v-autocomplete>
+				<v-autocomplete label="Parameter name" v-model="selectedParameter" clearable prepend-icon="warning" hint="Eg. PM25, PM10, SO2, NO2, O3, CO, BC" hide-selected persistent-hint :items="parameters" :rules="parameterRules" :menu-props="{'transition':'slide-y-transition'}" />
 			</v-flex>
 
 			<v-flex xs1>
@@ -15,87 +15,88 @@
 					<v-icon large>search</v-icon>
 				</v-btn>
 			</v-flex>
+
 		</v-layout>
 	</v-form>
-
 </template>
 
 <script>
-import axios from 'axios'
+	import axios from 'axios'
 
-const AIR_QUALITY_API_URL = process.env.VUE_APP_AIR_QUALITY_API_URL
-const MOST_POLLUTED_CITIES_LIMIT =	process.env.VUE_APP_MOST_POLLUTED_CITIES_LIMIT
+	const AIR_QUALITY_API_URL = process.env.VUE_APP_AIR_QUALITY_API_URL
+	const MOST_POLLUTED_CITIES_LIMIT = process.env.VUE_APP_MOST_POLLUTED_CITIES_LIMIT
 
-export default {
-  name: 'Search',
-  data () {
-    return {
-      valid: true,
-      selectedCountry: '',
-      selectedParameter: '',
-      countries: [{
-        name: 'Poland',
-        code: 'PL'
-      },
-      {
-        name: 'Germany',
-        code: 'DE'
-      },
-      {
-        name: 'Spain',
-        code: 'ES'
-      },
-      {
-        name: 'France',
-        code: 'FR'
-      }
-      ],
-      parameters: ['PM25', 'PM10', 'SO2', 'NO2', 'O3', 'CO', 'BC'],
-      countryRules: [v => !!v || 'Country name is required'],
-      parameterRules: [v => !!v || 'Parameter name is required']
-    }
-  },
-  methods: {
+	export default {
+		name: 'Search',
+		data() {
+			return {
+				valid: true,
+				selectedCountry: '',
+				selectedParameter: '',
+				countries: [{
+						name: 'Poland',
+						code: 'PL'
+					},
+					{
+						name: 'Germany',
+						code: 'DE'
+					},
+					{
+						name: 'Spain',
+						code: 'ES'
+					},
+					{
+						name: 'France',
+						code: 'FR'
+					}
+				],
+				parameters: ['PM25', 'PM10', 'SO2', 'NO2', 'O3', 'CO', 'BC'],
+				countryRules: [v => !!v || 'Country name is required'],
+				parameterRules: [v => !!v || 'Parameter name is required']
+			}
+		},
+		methods: {
+			handleSearch() {
+				if (this.$refs.form.validate()) {
+					this.$emit('loading', { loading: true })
 
-    // jesli jest 1 loading to ma byc timeout potem juz nie
-    handleSearch () {
-      if (this.$refs.form.validate()) {
-        this.$emit('loading', { loading: true })
-    
-          const { code } = this.countries.find(
-            item => item.name === this.selectedCountry
-          )
-          axios
-            .get(AIR_QUALITY_API_URL, {
-              params: {
-                country: code,
-                parameter: this.selectedParameter.toLowerCase(),
-                order_by: 'value',
-                sort: 'desc',
-                limit: MOST_POLLUTED_CITIES_LIMIT
-              }
-            })
-            .then(response => {
-              const mappedResults = response.data.results.map(this.mapSearchResults)
-              this.$emit('contentLoaded', { content: mappedResults })
-            })
-            .catch(() => this.$emit('error'))
-            .finally(() => this.$emit('loading', { loading: false }))
-        
-      }
-    },
-    mapSearchResults (item) {
-      return {
-        city: item.city,
-        measurement: {
-          parameter: item.measurements[0].parameter,
-          value: item.measurements[0].value,
-          unit: item.measurements[0].unit
-        }
-      }
-    }
-  }
-}
+					const { code } = this.countries.find(
+						item => item.name === this.selectedCountry
+					)
+					axios
+						.get(AIR_QUALITY_API_URL, {
+							params: {
+								country: code,
+								parameter: this.selectedParameter.toLowerCase(),
+								order_by: 'measurements[0].value',
+								sort: 'desc',
+								limit: MOST_POLLUTED_CITIES_LIMIT
+							}
+						})
+						.then(response => {
+							const mappedResults = response.data.results.map(this.mapSearchResults)
+							this.$emit('contentLoaded', { content: mappedResults })
+						})
+						.catch(() => this.$emit('error'))
+						.finally(() => this.$emit('loading', { loading: false }))
+				}
+			},
+			mapSearchResults(item) {
+				return {
+					place: {
+						city: item.city,
+						location: item.location,
+					},
+					measurement: {
+						parameter: item.measurements[0].parameter,
+						value: item.measurements[0].value,
+						unit: item.measurements[0].unit,
+						measurementTime: item.measurements[0].lastUpdated,
+					}
+				}
+			}
+		}
+	}
 </script>
 
 <style lang="scss" scoped>
