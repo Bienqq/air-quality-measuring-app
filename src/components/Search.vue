@@ -25,6 +25,7 @@
 
 	const AIR_QUALITY_API_URL = process.env.VUE_APP_AIR_QUALITY_API_URL
 	const MOST_POLLUTED_CITIES_LIMIT = process.env.VUE_APP_MOST_POLLUTED_CITIES_LIMIT
+	const MAX_SEARCH_RESULTS_LIMIT = parseInt(process.env.VUE_APP_MAX_SEARCH_RESULTS_LIMIT)
 
 	export default {
 		name: 'Search',
@@ -68,18 +69,31 @@
 							params: {
 								country: code,
 								parameter: this.selectedParameter.toLowerCase(),
-								order_by: 'measurements[0].value',
-								sort: 'desc',
-								limit: MOST_POLLUTED_CITIES_LIMIT
-							}
+								order_by: ['measurements[0].lastUpdated', 'measurements[0].value'],
+								sort: ['desc', 'desc'],
+								limit: MAX_SEARCH_RESULTS_LIMIT
+							},
 						})
 						.then(response => {
-							const mappedResults = response.data.results.map(this.mapSearchResults)
-							this.$emit('contentLoaded', { content: mappedResults })
+							const mostPollutedCities = this.getMostPollutedCities(response.data.results)
+							this.$emit('contentLoaded', { content: mostPollutedCities })
 						})
 						.catch(() => this.$emit('error'))
 						.finally(() => this.$emit('loading', { loading: false }))
 				}
+			},
+			getMostPollutedCities(results){
+				const mostPollutedCities = []
+				for(const result of results){
+					const mostPollutedCitiesNames = mostPollutedCities.map(el => el.city)
+					if(!mostPollutedCitiesNames.includes(result.city)){
+						mostPollutedCities.push(result)
+					}
+					if(mostPollutedCities.length >= MOST_POLLUTED_CITIES_LIMIT){
+						break
+					}
+				}
+				return mostPollutedCities.map(this.mapSearchResults)
 			},
 			mapSearchResults(item) {
 				return {

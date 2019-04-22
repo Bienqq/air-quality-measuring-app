@@ -6,6 +6,6 @@ Vue.use(Router)
 export default new Router({
   routes: [{
     path: '/',
-    component: () => import('@/views/Home')
+    component: () => import('@/views/SearchView')
   }]
 })

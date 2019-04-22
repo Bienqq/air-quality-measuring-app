@@ -15,7 +15,6 @@
 		box-sizing: border-box;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-
 	}
 
 	body {
@@ -25,6 +24,10 @@
 	}
 
 	#app {
-background-image: linear-gradient(to bottom, #ffffff, #f8f8f8, #f1f1f1, #eaeaea, #e3e3e3);
+		background-image: radial-gradient(circle, #eeeeee, #efefef, #efefef, #f0f0f0, #f0f0f0);
+	}
+
+	.rgba-gray{
+		color: rgba($color: #000000, $alpha: 0.54);
 	}
 </style>
