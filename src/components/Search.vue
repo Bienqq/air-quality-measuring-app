@@ -11,7 +11,7 @@
 			</v-flex>
 
 			<v-flex xs1>
-				<v-btn class="ml-0 mb-3" flat icon color="info" :disabled="!valid" @click="handleSearch">
+				<v-btn class="ml-0 mb-3" flat icon :color="'#1976D2'" :disabled="!valid" @click="handleSearch">
 					<v-icon large>search</v-icon>
 				</v-btn>
 			</v-flex>
