@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bienqq/air-quality-measuring-app.git"
+    "url": "git+https://github.com/Bienqq/pollution-viewer.git"
   },
   "keywords": [
     "air",
@@ -20,9 +20,9 @@
   "email": "tomek-1996-1996@o2.pl",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Bienqq/air-quality-measuring-app/issues"
+    "url": "https://github.com/Bienqq/pollution-viewer/issues"
   },
-  "homepage": "https://github.com/Bienqq/air-quality-measuring-app#readme",
+  "homepage": "https://github.com/Bienqq/pollution-viewer#readme",
   "dependencies": {
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
