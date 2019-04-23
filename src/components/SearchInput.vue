@@ -100,10 +100,7 @@ export default {
             params: {
               country: code,
               parameter: this.selectedParameter.toLowerCase(),
-              order_by: [
-                'measurements[0].lastUpdated',
-                'measurements[0].value'
-              ],
+              order_by: ['measurements[0].lastUpdated', 'measurements[0].value'],
               sort: ['desc', 'desc'],
               limit: MAX_SEARCH_RESULTS_LIMIT
             }

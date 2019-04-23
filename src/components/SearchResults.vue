@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-center row wrap>
-        <search-item class="animated fadeIn faster" v-for="(item, index) in content" :place="item.place"  :measurement="item.measurement" :key="index"/>
-        <h1 v-if="!content.length" class="animated fadeIn faster rgba-gray headline">No search results</h1>
+        <search-item class="animated fadeIn faster" v-for="(item, index) in content" :place="item.place" :measurement="item.measurement" :key="index"/>
+        <h1 v-if="!content.length" class="animated fadeIn faster rgba-grey headline">No search results</h1>
   </v-layout>
 </template>
 

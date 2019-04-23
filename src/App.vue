@@ -27,7 +27,7 @@ body {
   background-image: radial-gradient(circle, #eeeeee, #efefef, #efefef, #f0f0f0, #f0f0f0);
 }
 
-.rgba-gray {
+.rgba-grey {
   color: rgba($color: #000000, $alpha: 0.54);
 }
 </style>

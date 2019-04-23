@@ -26,13 +26,13 @@
                   </p>
                   <p>
                     <b>Measurement time:</b>
-                    {{ measurement.measurementTime.toLocaleString() }}
+                    {{ new Date(measurement.measurementTime).toLocaleString() }}
                   </p>
                 </v-card-text>
               </v-flex>
 
               <v-flex xs12 sm7 md5>
-                <v-img class="ma-3" :src="thumbnail" contain aspect-ratio="1.4"></v-img>
+                <v-img class="ma-3" :src="thumbnail" contain aspect-ratio="1.4" />
               </v-flex>
             </v-layout>
           </v-card>
@@ -46,6 +46,7 @@
             <v-card-text>{{ description }}</v-card-text>
           </v-card>
         </v-expansion-panel-content>
+
       </v-expansion-panel>
     </v-card>
   </v-flex>
@@ -70,9 +71,7 @@ export default {
     }
   },
   created () {
-    const url = encodeURI(
-      `${WIKIPEDIA_API_URL}${this.place.city.split('/')[0]}`
-    )
+    const url = encodeURI(`${WIKIPEDIA_API_URL}${this.place.city.split('/')[0]}`)
     axios
       .get(url)
       .then(response => {
@@ -84,10 +83,7 @@ export default {
           this.thumbnail = require('@/assets/images/city.jpg')
         }
       })
-      .catch(error => {
-        console.error(error)
-        // TODO do sth with that
-      })
+      .catch(error => console.error(error))
   }
 }
 </script>

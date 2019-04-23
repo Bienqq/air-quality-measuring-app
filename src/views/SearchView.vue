@@ -1,8 +1,9 @@
 <template>
   <v-container fluid>
+
     <v-layout column align-self-baseline fill-height v-bind="searchInputPosition">
       <v-flex xs3 :class="[!content && loading ? 'slideInUp' : '', 'animated', 'fast']">
-        <h1 class="display-1 mb-5 text-xs-center rgba-gray">POLLUTION VIEWER</h1>
+        <h1 class="display-1 mb-5 text-xs-center rgba-grey">POLLUTION VIEWER</h1>
         <search-input
           @loading="loading = $event.loading"
           @error="showErrorSnackbar = true"
@@ -23,6 +24,7 @@
       <v-icon large color="error">error</v-icon>
       <span class="subheading mr-4">Connection error</span>
     </v-snackbar>
+
   </v-container>
 </template>
 
