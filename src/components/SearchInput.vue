@@ -14,7 +14,7 @@
           :items="countries.map(el => el.name)"
           :rules="countryRules"
           :menu-props="{'transition':'slide-y-transition'}"
-          :disabled="loading"
+          :disabled="searchDisabled"
         />
       </v-flex>
 
@@ -30,7 +30,7 @@
           :items="parameters"
           :rules="parameterRules"
           :menu-props="{'transition':'slide-y-transition'}"
-          :disabled="loading"
+          :disabled="searchDisabled"
         />
       </v-flex>
 
@@ -40,8 +40,8 @@
           flat
           icon
           :color="'#1976D2'"
-          :disabled="!valid || loading"
-          @click="handleSearch"
+          :disabled="!valid || searchDisabled"
+          @click="searchClicked"
         >
           <v-icon large>search</v-icon>
         </v-btn>
@@ -51,18 +51,14 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-const AIR_QUALITY_API_URL = process.env.VUE_APP_AIR_QUALITY_API_URL
-const MOST_POLLUTED_CITIES_LIMIT = process.env.VUE_APP_MOST_POLLUTED_CITIES_LIMIT
-const MAX_SEARCH_RESULTS_LIMIT = parseInt(process.env.VUE_APP_MAX_SEARCH_RESULTS_LIMIT)
-
 export default {
   name: 'SearchInput',
+  props: {
+    searchDisabled: Boolean
+  },
   data () {
     return {
       valid: true,
-      loading: false,
       selectedCountry: '',
       selectedParameter: '',
       countries: [
@@ -89,61 +85,10 @@ export default {
     }
   },
   methods: {
-    handleSearch () {
+    searchClicked () {
       if (this.$refs.form.validate()) {
-        this.loading = true
-        this.$emit('loading', { loading: true })
         const { code } = this.countries.find(item => item.name === this.selectedCountry)
-
-        axios
-          .get(AIR_QUALITY_API_URL, {
-            params: {
-              country: code,
-              parameter: this.selectedParameter.toLowerCase(),
-              order_by: ['measurements[0].lastUpdated', 'measurements[0].value'],
-              sort: ['desc', 'desc'],
-              limit: MAX_SEARCH_RESULTS_LIMIT
-            }
-          })
-          .then(response => {
-            const mostPollutedCities = this.getMostPollutedCities(response.data.results)
-            this.$emit('contentLoaded', { content: mostPollutedCities })
-          })
-          .catch(error => {
-            console.error(error)
-            this.$emit('error')
-          })
-          .finally(() => {
-            this.loading = false
-            this.$emit('loading', { loading: false })
-          })
-      }
-    },
-    getMostPollutedCities (results) {
-      const mostPollutedCities = []
-      for (const result of results) {
-        const mostPollutedCitiesNames = mostPollutedCities.map(el => el.city)
-        if (!mostPollutedCitiesNames.includes(result.city)) {
-          mostPollutedCities.push(result)
-        }
-        if (mostPollutedCities.length >= MOST_POLLUTED_CITIES_LIMIT) {
-          break
-        }
-      }
-      return mostPollutedCities.map(this.mapSearchResults)
-    },
-    mapSearchResults (item) {
-      return {
-        place: {
-          city: item.city,
-          location: item.location
-        },
-        measurement: {
-          parameter: item.measurements[0].parameter,
-          value: item.measurements[0].value,
-          unit: item.measurements[0].unit,
-          measurementTime: item.measurements[0].lastUpdated
-        }
+        this.$emit('startSearch', { code: code, parameter: this.selectedParameter })
       }
     }
   }

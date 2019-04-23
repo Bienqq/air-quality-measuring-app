@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Vuetify from 'vuetify'
+
 import router from './router/router'
 
 import 'vuetify/dist/vuetify.min.css'
