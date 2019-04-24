@@ -1,5 +1,10 @@
 # Pollution Viewer
+| Vue | Vuetify |
+|--|--|
 
+**Pollution Viewer** - application to measure quality of air in most cities located some countries
+
+##
 ## Project setup
 ```
 npm install
@@ -15,20 +20,20 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
 ### Lints and fixes files
 ```
 npm run lint
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
+## Preview
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![Start&end placing](https://media.giphy.com/media/ZeRhOWAK9VFI46wEqS/giphy.gif)
+
+
+![Start&end placing](https://media.giphy.com/media/YqPS9hkA6vDfcT1A6t/giphy.gif)
+
+## Author
+[Tomasz Bieniek](https://github.com/Bienqq)
+
+## Licence
+MIT
