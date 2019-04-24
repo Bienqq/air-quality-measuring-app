@@ -2,7 +2,7 @@
 | Vue | Vuetify |
 |--|--|
 
-**Pollution Viewer** - application to measure quality of air in most cities located some countries
+**Pollution Viewer** - application to measure quality of air in most polluted cities located in Europe
 
 ##
 ## Project setup
