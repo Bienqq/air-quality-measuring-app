@@ -27,7 +27,7 @@ npm run lint
 
 ## Preview
 
-![Start&end placing](https://media.giphy.com/media/ZeRhOWAK9VFI46wEqS/giphy.gif)
+![Start&end placing](https://media.giphy.com/media/mDBMof9LCe0PsATxck/giphy.gif)
 
 
 ![Start&end placing](https://media.giphy.com/media/YqPS9hkA6vDfcT1A6t/giphy.gif)
