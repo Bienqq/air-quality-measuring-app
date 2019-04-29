@@ -91,6 +91,20 @@ export default {
         this.$emit('startSearch', { code: code, parameter: this.selectedParameter })
       }
     }
+  },
+  watch: {
+    selectedCountry (newValue) {
+      localStorage.selectedCountry = newValue
+    },
+    selectedParameter (newValue) {
+      localStorage.selectedParameter = newValue
+    }
+  },
+  created () {
+    if (localStorage.selectedCountry || localStorage.selectedParameter) {
+      this.selectedCountry = localStorage.selectedCountry
+      this.selectedParameter = localStorage.selectedParameter
+    }
   }
 }
 </script>
