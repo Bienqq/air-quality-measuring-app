@@ -94,10 +94,10 @@ export default {
   },
   watch: {
     selectedCountry (newValue) {
-      localStorage.selectedCountry = newValue
+      localStorage.selectedCountry = typeof newValue === 'undefined' ? '' : newValue
     },
     selectedParameter (newValue) {
-      localStorage.selectedParameter = newValue
+      localStorage.selectedParameter = typeof newValue === 'undefined' ? '' : newValue
     }
   },
   created () {
